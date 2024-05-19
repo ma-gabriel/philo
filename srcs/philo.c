@@ -6,7 +6,7 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:59:37 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/19 22:41:10 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/19 23:19:09 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,6 @@ void	del_philos(t_philo **philos)
 	free(philos);
 }
 
-bool	average_day(t_philo *const philo, t_table *const table)
-{
-	if (!take_fork(table->forks[philo->id]))
-		return (true);
-	if (!take_fork(table->forks[(philo->id + 1) % table->rules->attendance]))
-	{
-		release_fork(table->forks[philo->id]);
-		return (true);
-	}
-	if (!eating(table, philo))
-		return (false);
-	if (!sleeping(table, philo))
-		return (false);
-	if (!thinking(table, philo))
-		return (false);
-	return (true);
-}
-
 void	*routine(void *infos)
 {
 	t_philo *const	philo = ((t_philo **) infos)[0];
@@ -95,7 +77,19 @@ void	*routine(void *infos)
 	{
 		if (deadline != -1 && deadline < philo->meals)
 			return (NULL);
-		if (!average_day(philo, table))
+		if (!take_fork(table->forks[philo->id]))
+			continue ;
+		if (!take_fork(table->forks[(philo->id + 1)
+					% table->rules->attendance]))
+		{
+			release_fork(table->forks[philo->id]);
+			continue ;
+		}
+		if (!eating(table, philo))
+			return (NULL);
+		if (!sleeping(table, philo))
+			return (NULL);
+		if (!thinking(table, philo))
 			return (NULL);
 	}
 	return (NULL);
