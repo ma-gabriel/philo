@@ -26,6 +26,7 @@ SRCS =	fork.c \
 	main.c \
 	meal.c \
 	philo.c \
+	philo_utils.c \
 	rules.c \
 	table.c
 

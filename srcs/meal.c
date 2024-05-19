@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "struct_philo.h"
 #include "struct_table.h"
+#include "struct_rules.h"
 
 static void	*prepare_invitations(t_table *table)
 {
@@ -41,7 +43,7 @@ static pthread_t	*hosting_philosophers(int attendance, void **args)
 	i = 0;
 	while (i < attendance)
 	{
-		pthread_create(&(tids[i]), NULL, habitude, args + i * 2);
+		pthread_create(&(tids[i]), NULL, routine, args + i * 2);
 		i++;
 	}
 	return (tids);

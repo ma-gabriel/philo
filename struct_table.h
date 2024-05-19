@@ -18,6 +18,8 @@
 # include "struct_rules.h"
 # include "struct_fork.h"
 
+typedef struct s_philo	t_philo;
+
 typedef struct s_table
 {
 	t_rules			*rules;

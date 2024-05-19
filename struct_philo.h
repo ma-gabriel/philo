@@ -14,6 +14,9 @@
 # define STRUCT_PHILO_H
 
 # include "average_header.h"
+# include "struct_table.h"
+
+typedef struct s_table	t_table;
 
 typedef struct s_philo
 {
@@ -24,6 +27,10 @@ typedef struct s_philo
 
 t_philo	**create_philos(int attendance);
 void	del_philos(t_philo **philos);
-void	*habitude(void *infos);
+
+void	*routine(void *infos);
+bool	eating(t_table *const table, t_philo *const philo);
+bool	sleeping(t_table *const table, t_philo *const philo);
+bool	thinking(t_table *const table, t_philo *const philo);
 
 #endif
