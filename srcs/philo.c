@@ -6,7 +6,7 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:59:37 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/20 00:40:23 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/20 01:18:42 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	del_philos(t_philo **philos)
 	free(philos);
 }
 
-void	*routine(void *infos)
+void	*behaviour(void *infos)
 {
 	t_philo *const	philo = ((t_philo **) infos)[0];
 	t_table *const	table = ((t_table **) infos)[1];

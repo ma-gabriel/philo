@@ -6,7 +6,7 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:30:39 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/19 22:02:34 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/20 01:23:18 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static pthread_t	*hosting_philosophers(int attendance, void **args)
 	i = 0;
 	while (i < attendance)
 	{
-		pthread_create(&(tids[i]), NULL, routine, args + i * 2);
+		pthread_create(&(tids[i]), NULL, behaviour, args + i * 2);
 		i++;
 	}
 	return (tids);
