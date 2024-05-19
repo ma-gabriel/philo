@@ -6,7 +6,7 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:00:46 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/15 07:08:32 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/19 16:05:40 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ enum e_status
 
 typedef struct s_fork
 {
-	pthread_mutex_t	*lock;
+	pthread_mutex_t	lock;
 	enum e_status	status;
 }	t_fork;
 
