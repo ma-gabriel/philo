@@ -13,36 +13,6 @@
 #include "struct_philo.h"
 #include "struct_table.h"
 
-//a mettre dans table.c
-void	there_is_death(t_table *table, int id, struct timeval now)
-{
-	if (!pthread_mutex_lock(&(table->mutex)))
-	{
-		if (!table->tragedy)
-		{
-			printf("%li %i died\n",
-				(now.tv_sec - table->start.tv_sec) * 1000
-				+ (now.tv_usec - table->start.tv_usec) / 1000, id);
-			table->tragedy = true;
-		}
-		pthread_mutex_unlock(&(table->mutex));
-	}
-}
-
-//a mettre dans table.c
-bool	is_there_death(t_table *table)
-{
-	bool	res;
-
-	res = true;
-	if (!pthread_mutex_lock(&(table->mutex)))
-	{
-		res = table->tragedy;
-		pthread_mutex_unlock(&(table->mutex));
-	}
-	return (res);
-}
-
 t_philo	*create_philo(int id)
 {
 	t_philo	*philo;
@@ -129,20 +99,20 @@ void	wait_ms(int time, t_table *const table, t_philo *const philo)
 bool	eating(t_table *const table, t_philo *const philo)
 {
 	struct timeval	now;
-	long int	timestamp;
-	bool		regular;
+	long int		timestamp;
+	bool			regular;
 
 	regular = false;
 	if (!pthread_mutex_lock(&(table->mutex)))
 	{
 		gettimeofday(&now, NULL);
-		timestamp = (now.tv_sec - table->start.tv_sec) * 1000 + (now.tv_usec - table->start.tv_usec) / 1000; 
+		timestamp = (now.tv_sec - table->start.tv_sec) * 1000
+			+ (now.tv_usec - table->start.tv_usec) / 1000;
 		if (!table->tragedy)
 		{
-			printf("%li %i has taken a fork\n%li %i has "
-					"taken a fork\n%li %i is eating\n"
-					, timestamp, philo->id, timestamp,
-					philo->id, timestamp, philo->id);
+			printf("%li %i has taken a fork\n%li %i has taken a fork\n"
+				"%li %i is eating\n", timestamp, philo->id, timestamp,
+				philo->id, timestamp, philo->id);
 			regular = true;
 		}
 		pthread_mutex_unlock(&(table->mutex));
@@ -157,15 +127,16 @@ bool	eating(t_table *const table, t_philo *const philo)
 
 bool	sleeping(t_table *const table, t_philo *const philo)
 {
-	struct timeval  now;
-	long int        timestamp;
-	bool		regular;
+	struct timeval	now;
+	long int		timestamp;
+	bool			regular;
 
 	regular = false;
 	if (!pthread_mutex_lock(&(table->mutex)))
 	{
 		gettimeofday(&now, NULL);
-		timestamp = (now.tv_sec - table->start.tv_sec) * 1000 + (now.tv_usec - table->start.tv_usec) / 1000;
+		timestamp = (now.tv_sec - table->start.tv_sec) * 1000
+			+ (now.tv_usec - table->start.tv_usec) / 1000;
 		if (!table->tragedy)
 		{
 			printf("%li %i is sleeping\n", timestamp, philo->id);
@@ -181,13 +152,14 @@ bool	thinking(t_table *const table, t_philo *const philo)
 {
 	struct timeval	now;
 	long int		timestamp;
-	bool		regular;
+	bool			regular;
 
 	regular = false;
 	if (!pthread_mutex_lock(&(table->mutex)))
 	{
 		gettimeofday(&now, NULL);
-		timestamp = (now.tv_sec - table->start.tv_sec) * 1000 + (now.tv_usec - table->start.tv_usec) / 1000;
+		timestamp = (now.tv_sec - table->start.tv_sec) * 1000
+			+ (now.tv_usec - table->start.tv_usec) / 1000;
 		if (!table->tragedy)
 		{
 			printf("%li %i is thinking\n", timestamp, philo->id);
@@ -198,14 +170,13 @@ bool	thinking(t_table *const table, t_philo *const philo)
 	return (regular);
 }
 
-
 bool	average_day(t_philo *const philo, t_table *const table)
 {
-	if (take_fork(table->forks[(philo->id + philo->id % 2) % table->rules->attendance]) == false)
+	if (!take_fork(table->forks[philo->id]))
 		return (true);
-	if (take_fork(table->forks[(philo->id + !(philo->id % 2)) % table->rules->attendance]) == false)
+	if (!take_fork(table->forks[(philo->id + 1) % table->rules->attendance]))
 	{
-		release_fork(table->forks[(philo->id + philo->id % 2) % table->rules->attendance]);
+		release_fork(table->forks[philo->id]);
 		return (true);
 	}
 	if (!eating(table, philo))
@@ -221,10 +192,11 @@ void	*habitude(void *infos)
 {
 	t_philo *const	philo = ((t_philo **) infos)[0];
 	t_table *const	table = ((t_table **) infos)[1];
+	const int		deadline = table->rules->deadline;
 
 	while (42)
 	{
-		if (table->rules->deadline != -1 && table->rules->deadline < philo->meals)
+		if (deadline != -1 && deadline < philo->meals)
 			return (NULL);
 		if (!average_day(philo, table))
 			return (NULL);

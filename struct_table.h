@@ -31,4 +31,6 @@ typedef struct s_table
 t_table	*create_table(t_rules *rules);
 void	del_table(t_table *table);
 
+void	there_is_death(t_table *table, int id, struct timeval now);
+bool	is_there_death(t_table *table);
 #endif
