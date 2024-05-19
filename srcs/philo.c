@@ -6,7 +6,7 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:59:37 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/19 23:19:09 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/20 00:40:23 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,11 @@ void	*routine(void *infos)
 
 	while (42)
 	{
-		if (deadline != -1 && deadline < philo->meals)
+		check_death(table, philo);
+		if ((deadline != -1 && deadline < philo->meals)
+			|| is_there_death(table))
 			return (NULL);
+		is_there_death(table);
 		if (!take_fork(table->forks[philo->id]))
 			continue ;
 		if (!take_fork(table->forks[(philo->id + 1)
@@ -85,11 +88,9 @@ void	*routine(void *infos)
 			release_fork(table->forks[philo->id]);
 			continue ;
 		}
-		if (!eating(table, philo))
-			return (NULL);
-		if (!sleeping(table, philo))
-			return (NULL);
-		if (!thinking(table, philo))
+		if (!eating(table, philo)
+			|| !sleeping(table, philo)
+			|| !thinking(table, philo))
 			return (NULL);
 	}
 	return (NULL);

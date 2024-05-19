@@ -6,7 +6,7 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:00:46 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/19 15:06:17 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/20 00:10:16 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ void	*routine(void *infos);
 bool	eating(t_table *const table, t_philo *const philo);
 bool	sleeping(t_table *const table, t_philo *const philo);
 bool	thinking(t_table *const table, t_philo *const philo);
+void	check_death(t_table *const table, t_philo *const philo);
 
 #endif

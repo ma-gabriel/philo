@@ -6,7 +6,7 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 23:03:18 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/19 23:03:26 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/20 01:13:56 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,23 @@ void	check_death(t_table *const table, t_philo *const philo)
 		there_is_death(table, philo->id, now);
 }
 
-void	wait_ms(int time, t_table *const table, t_philo *const philo)
+void	wait_ms(int time, t_table *const table,
+	t_philo *const philo, bool can_starve)
 {
 	struct timeval	start;
 	struct timeval	now;
 
-	gettimeofday(&now, NULL);
 	gettimeofday(&start, NULL);
+	gettimeofday(&now, NULL);
 	while ((now.tv_sec - start.tv_sec) * 1000000
 		+ (now.tv_usec - start.tv_usec) <= ((long) time) * 1000)
 	{
-		check_death(table, philo);
+		if (can_starve)
+			check_death(table, philo);
 		if (is_there_death(table))
 			return ;
 		gettimeofday(&now, NULL);
-		usleep(3000);
+		usleep(500);
 	}
 }
 
@@ -63,11 +65,9 @@ bool	eating(t_table *const table, t_philo *const philo)
 		}
 		pthread_mutex_unlock(&(table->mutex));
 	}
+	wait_ms(table->rules->gobbling, table, philo, false);
 	gettimeofday(&(philo->last_meal), NULL);
-	wait_ms(table->rules->gobbling, table, philo);
 	philo->meals++;
-	release_fork(table->forks[philo->id]);
-	release_fork(table->forks[(philo->id + 1) % table->rules->attendance]);
 	return (regular);
 }
 
@@ -90,7 +90,9 @@ bool	sleeping(t_table *const table, t_philo *const philo)
 		}
 		pthread_mutex_unlock(&(table->mutex));
 	}
-	wait_ms(table->rules->sleeptime, table, philo);
+	release_fork(table->forks[philo->id]);
+	release_fork(table->forks[(philo->id + 1) % table->rules->attendance]);
+	wait_ms(table->rules->sleeptime, table, philo, true);
 	return (regular);
 }
 
