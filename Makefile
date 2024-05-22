@@ -6,7 +6,7 @@
 #    By: geymat <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/02 18:15:25 by geymat            #+#    #+#              #
-#    Updated: 2024/05/15 06:18:05 by geymat           ###   ########.fr        #
+#    Updated: 2024/05/22 23:53:28 by geymat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = philo
 
 FLAGS = -Wall -Wextra -Werror
 
-HEADER = -I. 
+HEADER = -I includes 
 
 DEPS =	average_header.h \
 	struct_fork.h \

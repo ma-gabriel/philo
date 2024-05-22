@@ -6,7 +6,7 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:59:37 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/20 01:18:42 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/22 23:43:18 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	*behaviour(void *infos)
 	t_philo *const	philo = ((t_philo **) infos)[0];
 	t_table *const	table = ((t_table **) infos)[1];
 	const int		deadline = table->rules->deadline;
+	const int		id = philo->id;
 
 	while (42)
 	{
@@ -79,15 +80,14 @@ void	*behaviour(void *infos)
 		if ((deadline != -1 && deadline < philo->meals)
 			|| is_there_death(table))
 			return (NULL);
-		is_there_death(table);
-		if (!take_fork(table->forks[philo->id]))
-			continue ;
-		if (!take_fork(table->forks[(philo->id + 1)
-					% table->rules->attendance]))
-		{
-			release_fork(table->forks[philo->id]);
-			continue ;
-		}
+		while (!take_fork(table->forks[(id + !(id % 2))
+					% table->rules->attendance], id, table)
+			&& !is_there_death(table))
+			check_death(table, philo);
+		while (!take_fork(table->forks[(id + id % 2)
+					% table->rules->attendance], id, table)
+			&& !is_there_death(table))
+			check_death(table, philo);
 		if (!eating(table, philo)
 			|| !sleeping(table, philo)
 			|| !thinking(table, philo))

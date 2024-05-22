@@ -6,7 +6,7 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 23:03:18 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/20 01:13:56 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/22 23:48:41 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,7 @@ bool	eating(t_table *const table, t_philo *const philo)
 			+ (now.tv_usec - table->start.tv_usec) / 1000;
 		if (!table->tragedy)
 		{
-			printf("%li %i has taken a fork\n%li %i has taken a fork\n"
-				"%li %i is eating\n", timestamp, philo->id, timestamp,
-				philo->id, timestamp, philo->id);
+			printf("%li %i is eating\n", timestamp, philo->id);
 			regular = true;
 		}
 		pthread_mutex_unlock(&(table->mutex));
