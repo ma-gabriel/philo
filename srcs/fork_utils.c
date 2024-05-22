@@ -6,7 +6,7 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:59:37 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/22 23:47:08 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/22 23:58:50 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ static void	announce_fork_taken(int id, t_table *table)
 	{
 		gettimeofday(&now, NULL);
 		if (!table->tragedy)
-			printf("%li %i has taken a fork\n", (now.tv_sec - table->start.tv_sec) * 1000
-					+ (now.tv_usec - table->start.tv_usec) / 1000, id);
+			printf("%li %i has taken a fork\n",
+				(now.tv_sec - table->start.tv_sec) * 1000
+				+ (now.tv_usec - table->start.tv_usec) / 1000, id);
 	}
 	pthread_mutex_unlock(&(table->mutex));
 }
