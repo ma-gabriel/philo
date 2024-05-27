@@ -23,7 +23,7 @@ static void	announce_fork_taken(int id, t_table *table)
 		if (!table->tragedy)
 			printf("%li %i has taken a fork\n",
 				(now.tv_sec - table->start.tv_sec) * 1000
-				+ (now.tv_usec - table->start.tv_usec) / 1000, id);
+				+ (now.tv_usec - table->start.tv_usec) / 1000, id + 1);
 	}
 	pthread_mutex_unlock(&(table->mutex));
 }
