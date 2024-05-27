@@ -88,7 +88,8 @@ bool	the_preparation(char **argv)
 		del_rules(rules);
 		return (1);
 	}
-	success = the_meal(table);
+	the_meal(table);
+	success = table->tragedy;
 	del_table(table);
 	return (success);
 }

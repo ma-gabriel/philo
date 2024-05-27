@@ -6,7 +6,7 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:59:37 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/22 23:43:18 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/27 16:40:47 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,20 @@ void	*behaviour(void *infos)
 	t_philo *const	philo = ((t_philo **) infos)[0];
 	t_table *const	table = ((t_table **) infos)[1];
 	const int		deadline = table->rules->deadline;
-	const int		id = philo->id;
 
-	while (42)
+	if (deadline)
+		thinking(table, philo);
+	if (philo->id % 2)
+		usleep(100);
+	check_death(table, philo);
+	while (!(deadline != -1 && deadline <= philo->meals)
+		&& !is_there_death(table))
 	{
-		check_death(table, philo);
-		if ((deadline != -1 && deadline < philo->meals)
-			|| is_there_death(table))
-			return (NULL);
-		while (!take_fork(table->forks[(id + !(id % 2))
-					% table->rules->attendance], id, table)
+		while (!take_fork(table->forks[philo->id], philo->id, table)
 			&& !is_there_death(table))
 			check_death(table, philo);
-		while (!take_fork(table->forks[(id + id % 2)
-					% table->rules->attendance], id, table)
+		while (!take_fork(table->forks[(philo->id + 1) % \
+			table->rules->attendance], philo->id, table)
 			&& !is_there_death(table))
 			check_death(table, philo);
 		if (!eating(table, philo)

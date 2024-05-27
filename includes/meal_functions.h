@@ -6,13 +6,13 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 19:31:25 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/13 19:32:15 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/24 14:26:08 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MEAL_FUNCTIONS_H
 # define MEAL_FUNCTIONS_H
 
-int	the_preparation(char **argv);
+bool	the_preparation(char **argv);
 
 #endif

@@ -6,15 +6,11 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 12:47:44 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/13 21:46:23 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/24 14:27:39 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <pthread.h>
-
+#include "average_header.h"
 #include "meal_functions.h"
 
 static int	is_a_number(char *num)
@@ -43,7 +39,8 @@ static int	is_a_number(char *num)
 
 int	main(int argc, char **argv)
 {
-	int	i;
+	int		i;
+	bool	res;
 
 	if (argc != 5 && argc != 6)
 	{
@@ -57,6 +54,6 @@ int	main(int argc, char **argv)
 			return (1);
 		i++;
 	}
-	the_preparation(argv);
-	return (0);
+	res = the_preparation(argv);
+	return (res);
 }
