@@ -6,7 +6,7 @@
 /*   By: geymat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:59:37 by geymat            #+#    #+#             */
-/*   Updated: 2024/05/27 16:40:47 by geymat           ###   ########.fr       */
+/*   Updated: 2024/05/27 22:49:05 by geymat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ t_philo	**create_philos(int attendance)
 	return (res);
 }
 
-void	del_philo(t_philo *philo)
-{
-	free(philo);
-}
-
 void	del_philos(t_philo **philos)
 {
 	int	i;
@@ -61,7 +56,7 @@ void	del_philos(t_philo **philos)
 	i = 0;
 	while (philos[i])
 	{
-		del_philo(philos[i]);
+		free(philos[i]);
 		i++;
 	}
 	free(philos);
@@ -76,17 +71,17 @@ void	*behaviour(void *infos)
 	if (deadline)
 		thinking(table, philo);
 	if (philo->id % 2)
-		usleep(100);
+		usleep(200);
 	check_death(table, philo);
 	while (!(deadline != -1 && deadline <= philo->meals)
 		&& !is_there_death(table))
 	{
-		while (!take_fork(table->forks[philo->id], philo->id, table)
-			&& !is_there_death(table))
+		while ((!take_fork(table->forks[philo->id], philo->id, table)
+				&& !is_there_death(table)) && (usleep(200) || 1))
 			check_death(table, philo);
-		while (!take_fork(table->forks[(philo->id + 1) % \
-			table->rules->attendance], philo->id, table)
-			&& !is_there_death(table))
+		while (!take_fork(table->forks[(philo->id + 1)
+					% table->rules->attendance], philo->id, table)
+			&& !is_there_death(table) && (usleep(200) || 1))
 			check_death(table, philo);
 		if (!eating(table, philo)
 			|| !sleeping(table, philo)

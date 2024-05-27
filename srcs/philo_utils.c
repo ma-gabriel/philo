@@ -65,7 +65,7 @@ bool	eating(t_table *const table, t_philo *const philo)
 			+ (now.tv_usec - table->start.tv_usec) / 1000;
 		if (!table->tragedy)
 		{
-			printf("%li %i is eating\n", timestamp, philo->id);
+			printf("%li %i is eating\n", timestamp, philo->id + 1);
 			regular = true;
 		}
 		pthread_mutex_unlock(&(table->mutex));
@@ -89,7 +89,7 @@ bool	sleeping(t_table *const table, t_philo *const philo)
 			+ (now.tv_usec - table->start.tv_usec) / 1000;
 		if (!table->tragedy)
 		{
-			printf("%li %i is sleeping\n", timestamp, philo->id);
+			printf("%li %i is sleeping\n", timestamp, philo->id + 1);
 			regular = true;
 		}
 		pthread_mutex_unlock(&(table->mutex));
@@ -114,7 +114,7 @@ bool	thinking(t_table *const table, t_philo *const philo)
 			+ (now.tv_usec - table->start.tv_usec) / 1000;
 		if (!table->tragedy)
 		{
-			printf("%li %i is thinking\n", timestamp, philo->id);
+			printf("%li %i is thinking\n", timestamp, philo->id + 1);
 			regular = true;
 		}
 		pthread_mutex_unlock(&(table->mutex));

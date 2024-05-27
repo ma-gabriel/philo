@@ -84,10 +84,7 @@ bool	the_preparation(char **argv)
 		return (1);
 	table = create_table(rules);
 	if (!table)
-	{
-		del_rules(rules);
 		return (1);
-	}
 	the_meal(table);
 	success = table->tragedy;
 	del_table(table);
